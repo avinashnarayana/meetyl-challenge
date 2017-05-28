@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inviter_id: 1
+  subject: MyString
+  location: MyString
+  start_time: 2017-05-28 21:36:16
+  end_time: 2017-05-28 21:36:16
+  max_size: 1
+
+two:
+  inviter_id: 1
+  subject: MyString
+  location: MyString
+  start_time: 2017-05-28 21:36:16
+  end_time: 2017-05-28 21:36:16
+  max_size: 1
