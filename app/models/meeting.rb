@@ -3,6 +3,7 @@ class Meeting < ApplicationRecord
   has_many :invitations, dependent: :destroy
 
   # validations
+  validates_presence_of :location, :inviter_id, :start_time, :end_time
   validate :end_time_is_valid?,:start_time_is_valid?
   def end_time_is_valid?
     if end_time<=start_time
