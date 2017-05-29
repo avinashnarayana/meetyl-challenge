@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :meetings do
     resources :invitations
   end
+  resources :invitations
 end

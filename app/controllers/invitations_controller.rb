@@ -33,11 +33,11 @@ class InvitationsController < ApplicationController
   private
 
   def invitation_params
-    params.permit(:name, :done)
+    params.permit(:invitee_id, :response)
   end
 
   def set_meeting
-    @meeting = meeting.find(params[:meeting_id])
+    @meeting = Meeting.find(params[:meeting_id])
   end
 
   def set_meeting_invitation

@@ -3,13 +3,13 @@ class MeetingsController < ApplicationController
 
   # GET /meetings
   def index
-    @meetings = meeting.all
+    @meetings = Meeting.all
     json_response(@meetings)
   end
 
   # POST /meetings
   def create
-    @meeting = meeting.create!(meeting_params)
+    @meeting = Meeting.create!(meeting_params)
     json_response(@meeting, :created)
   end
 
@@ -34,10 +34,10 @@ class MeetingsController < ApplicationController
 
   def meeting_params
     # whitelist params
-    params.permit(:title, :created_by)
+    params.permit(:subject, :inviter_id, :location, :start_time, :end_time, :max_size)
   end
 
   def set_meeting
-    @meeting = meeting.find(params[:id])
+    @meeting = Meeting.find(params[:id])
   end
 end

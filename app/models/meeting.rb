@@ -4,15 +4,13 @@ class Meeting < ApplicationRecord
 
   # validations
   validates_presence_of :location, :inviter_id, :start_time, :end_time
-  validate :end_time_is_valid?,:start_time_is_valid?
-  def end_time_is_valid?
-    if end_time<=start_time
-      errors.add(:end_time, 'must be after start time') 
-    end
+  validate :start_time_is_valid, :end_time_is_valid
+  def end_time_is_valid
+    errors.add(:end_time, 'must be a valid datetime') if ((DateTime.parse(end_time) rescue ArgumentError) == ArgumentError)
+    errors.add(:end_time, 'must be after start time') if end_time<=start_time
   end
-  def start_time_is_valid?
-    if start_time<DateTime.now
-      errors.add(:start_time, 'must be in the future')
-    end
+  def start_time_is_valid
+    errors.add(:start_time, 'must be a valid datetime') if ((DateTime.parse(start_time) rescue ArgumentError) == ArgumentError)
+    errors.add(:start_time, 'must be in the future') if start_time<DateTime.now.to_s
   end
 end
