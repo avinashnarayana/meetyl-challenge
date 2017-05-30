@@ -4,4 +4,6 @@ Rails.application.routes.draw do
     resources :invitations
   end
   resources :invitations
+  post 'signup', to: 'users#create'
+  post 'auth/login', to: 'authentication#authenticate'
 end

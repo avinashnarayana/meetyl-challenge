@@ -1,15 +1,15 @@
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: [:show, :update, :destroy]
-
-  # GET /meetings
+  before_action :set_meeting_for_inviter, only: [:update, :destroy]
+  before_action :set_meeting, only: :show
+  # GET /meetings gives created and invited meetings
   def index
-    @meetings = Meeting.all
+    @meetings = (current_user.meetings + current_user.invited_meetings).sort_by(&:start_time)
     json_response(@meetings)
   end
 
   # POST /meetings
   def create
-    @meeting = Meeting.create!(meeting_params)
+    @meeting = current_user.meetings.create!(meeting_params)
     json_response(@meeting, :created)
   end
 
@@ -39,5 +39,9 @@ class MeetingsController < ApplicationController
 
   def set_meeting
     @meeting = Meeting.find(params[:id])
+  end
+  
+  def set_meeting_for_inviter
+    @meeting = current_user.meetings.find_by!(id: params[:id])
   end
 end

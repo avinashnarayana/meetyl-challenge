@@ -1,6 +1,8 @@
 class Meeting < ApplicationRecord
   # model association
   has_many :invitations, dependent: :destroy
+  belongs_to :inviter, class_name: "User"
+  has_many :invitees, through: :invitations
 
   # validations
   validates_presence_of :location, :inviter_id, :start_time, :end_time
