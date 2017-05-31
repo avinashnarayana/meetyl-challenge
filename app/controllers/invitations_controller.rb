@@ -15,13 +15,22 @@ class InvitationsController < ApplicationController
 
   # POST /meetings/:meeting_id/invitations
   def create
-    invitation = @meeting.invitations.create!(invitee_id: @invitee.id)
-    json_response(invitation, :created)
+    @invitation = @meeting.invitations.create!(invitee_id: @invitee.id)
+    json_response(@invitation, :created)
   end
 
   # PUT /meetings/:meeting_id/invitations/:id
+  # Ensuring that only one invitee can update their response at a time
   def update
-    @invitation.update(invitation_update_params) if current_user == @invitation.invitee
+    ActiveRecord::Base.transaction do
+      @invitee = @invitation.invitee
+      accepted_invitees = @meeting.invitations.count { |invitation| invitation.response == "Accepted"}
+      if @invitee==current_user && @meeting.max_size>= accepted_invitees
+        if @invitation.update_attributes(invitation_update_params)
+          return json_response(@invitation, :updated)
+        end
+      end
+    end
     head :no_content
   end
 
