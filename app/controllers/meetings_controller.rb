@@ -34,7 +34,7 @@ class MeetingsController < ApplicationController
 
   def meeting_params
     # whitelist params
-    params.permit(:subject, :inviter_id, :location, :start_time, :end_time, :max_size)
+    params.permit(:subject, :location, :start_time, :end_time, :max_size)
   end
 
   def set_meeting

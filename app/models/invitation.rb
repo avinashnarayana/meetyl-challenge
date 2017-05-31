@@ -8,6 +8,6 @@ class Invitation < ApplicationRecord
   validates_presence_of :meeting_id, :invitee_id
   validates :response, inclusion: { in: ["Accepted", "Declined"], message: "%{value} is not a valid response" }, on: :update
   def set_defaults
-    self.response = "No Response Yet"
+    self.response ||= "No Response Yet"
   end
 end
